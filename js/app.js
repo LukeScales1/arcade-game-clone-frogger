@@ -6,7 +6,7 @@ var Enemy = function(yVal, xRate) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 100;
+    this.x = 0;
     this.y = yVal;
     this.speed = xRate;
 };
@@ -17,7 +17,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    // this.x = this.x + this.speed*dt;
+    this.x = this.x + this.speed*dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -52,10 +52,20 @@ Player.prototype.handleInput = function(keyVal) {
 }
 
 Player.prototype.update = function(dt) {
+    // yVals is an array of potential y values for the player; each value represents a tile
     const yVals = [-15, 68, 151, 234, 317, 400];
-    let enemyCheck = yVals.indexOf(this.y) - 1;
-    if(enemyCheck < 3 && enemyCheck > -1) {
-        console.log(allEnemies[enemyCheck].y);
+    // enemyIndex gives the index to entry in allEnemies array for the Enemy the Player can currently (potentially) 
+    // collide with Enemy objects added to array in ascending order of y values - if Player is on the top most tile,
+    // the Player.y value will be 68, i.e. at index 1 in the yVals array. This corresponds with the enemy1,
+    // i.e. allEnemies[0], so the enemyIndex must be the yVals.indexOf(Player.y) - 1
+    let enemyIndex = yVals.indexOf(this.y) - 1;
+    //  
+    if(enemyIndex < 3 && enemyIndex > -1) {
+        let loLimit = this.x - 80;
+        let hiLimit = this.x + 80;
+        if(allEnemies[enemyIndex].x > loLimit && allEnemies[enemyIndex].x < hiLimit) {
+            player = new Player();
+        }
     }
 
 }
