@@ -35,13 +35,19 @@ var Player = function() {
 
 Player.prototype.handleInput = function(keyVal) {
     // if this.y === -15, Player is in the water; yvals = [-15, 68, 151, 234, 317, 400];
-    if(keyVal === 'up') {
-        this.y -= 83;
+    const ydt = 83;
+    const xdt = 100;
+
+    // Moves Player character depending on key pressed and prevents Player from moving out of bounds
+    if(keyVal === 'up' && this.y > -15) {
+        this.y -= ydt;
     } else if(keyVal === 'down' && this.y < 400) {
-        this.y += 83;
+        this.y += ydt;
+    } else if(keyVal === 'left' && this.x > 0) {
+        this.x -= xdt;
+    } else if(keyVal === 'right' && this.x < 400) {
+        this.x += xdt;
     }
-    let ything = this.y;
-    console.log(ything);
 }
 
 Player.prototype.update = function(dt) {
