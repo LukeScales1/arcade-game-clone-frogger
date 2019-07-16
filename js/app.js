@@ -34,11 +34,14 @@ var Player = function() {
 }
 
 Player.prototype.handleInput = function(keyVal) {
+    // if this.y === -15, Player is in the water; yvals = [-15, 68, 151, 234, 317, 400];
     if(keyVal === 'up') {
         this.y -= 83;
     } else if(keyVal === 'down' && this.y < 400) {
         this.y += 83;
     }
+    let ything = this.y;
+    console.log(ything);
 }
 
 Player.prototype.update = function(dt) {
