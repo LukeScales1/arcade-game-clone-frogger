@@ -1,4 +1,4 @@
-// Enemies our player must avoid
+ // Enemies our player must avoid
 var Enemy = function(yVal) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -29,10 +29,16 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var Player = function() {
     this.sprite = 'images/char-boy.png'
+    this.x = 200;
+    this.y = 400;
 }
 
-Player.prototype.handleInput = function() {
-
+Player.prototype.handleInput = function(keyVal) {
+    if(keyVal === 'up') {
+        this.y -= 83;
+    } else if(keyVal === 'down' && this.y < 400) {
+        this.y += 83;
+    }
 }
 
 Player.prototype.update = function(dt) {
