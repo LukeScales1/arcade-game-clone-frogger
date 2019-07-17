@@ -6,7 +6,7 @@ var Enemy = function(yVal, xRate) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 0;
+    this.x = -100;
     this.y = yVal;
     this.speed = xRate;
 };
@@ -18,6 +18,9 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     this.x = this.x + this.speed*dt;
+    if(this.x > 505) {
+        this.x = -100;
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -32,7 +35,7 @@ var Player = function() {
     this.sprite = 'images/char-boy.png'
     this.x = 200;
     this.y = 400;
-}
+};
 
 Player.prototype.handleInput = function(keyVal) {
     // if this.y === -15, Player is in the water; yvals = [-15, 68, 151, 234, 317, 400];
@@ -49,11 +52,17 @@ Player.prototype.handleInput = function(keyVal) {
     } else if(keyVal === 'right' && this.x < 400) {
         this.x += xdt;
     }
-}
+};
 
 Player.prototype.update = function(dt) {
     // yVals is an array of potential y values for the player; each value represents a tile
     const yVals = [-15, 68, 151, 234, 317, 400];
+
+    // game won condition - Player has reached the water
+    if(this.y === yVals[0]) {
+        alert("Congrats! You have won the game!");
+        player = new Player();
+    }
     // enemyIndex gives the index to entry in allEnemies array for the Enemy the Player can currently (potentially) 
     // collide with Enemy objects added to array in ascending order of y values - if Player is on the top most tile,
     // the Player.y value will be 68, i.e. at index 1 in the yVals array. This corresponds with the enemy1,
@@ -62,13 +71,12 @@ Player.prototype.update = function(dt) {
     //  
     if(enemyIndex < 3 && enemyIndex > -1) {
         let loLimit = this.x - 80;
-        let hiLimit = this.x + 80;
+        let hiLimit = this.x + 60;
         if(allEnemies[enemyIndex].x > loLimit && allEnemies[enemyIndex].x < hiLimit) {
             player = new Player();
         }
     }
-
-}
+};
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -79,9 +87,9 @@ Player.prototype.render = function() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var player = new Player();
-var enemy1 = new Enemy(60, 40);
-var enemy2 = new Enemy(140, 100);
-var enemy3 = new Enemy(220, 60);
+var enemy1 = new Enemy(60, 50);
+var enemy2 = new Enemy(140, 120);
+var enemy3 = new Enemy(220, 80);
 var allEnemies = [enemy1, enemy2, enemy3];
 
 
