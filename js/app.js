@@ -50,7 +50,7 @@ Player.prototype.update = function(dt) {
     // game won condition - Player has reached the water
     if(this.y === yVals[0]) {
         alert("Congrats! You have won the game!");
-        player = new Player();
+        player.reset();
     }
     // enemyIndex gives the index to entry in allEnemies array for the Enemy the Player can currently (potentially) 
     // collide with Enemy objects added to array in ascending order of y values - if Player is on the top most tile,
@@ -71,6 +71,10 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+Player.prototype.reset = function() {
+    this.x = 200;
+    this.y = 400;
+}
 
 var player = new Player();
 var enemy1 = new Enemy(60, 50);
