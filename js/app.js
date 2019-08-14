@@ -50,19 +50,20 @@ Player.prototype.update = function(dt) {
     // game won condition - Player has reached the water
     if(this.y === yVals[0]) {
         alert("Congrats! You have won the game!");
-        player.reset();
+        this.reset();
     }
     // enemyIndex gives the index to entry in allEnemies array for the Enemy the Player can currently (potentially) 
     // collide with Enemy objects added to array in ascending order of y values - if Player is on the top most tile,
     // the Player.y value will be 68, i.e. at index 1 in the yVals array. This corresponds with the enemy1,
     // i.e. allEnemies[0], so the enemyIndex must be the yVals.indexOf(Player.y) - 1
     let enemyIndex = yVals.indexOf(this.y) - 1;
-    //  
+     
     if(enemyIndex < 3 && enemyIndex > -1) {
         let loLimit = this.x - 80;
         let hiLimit = this.x + 60;
         if(allEnemies[enemyIndex].x > loLimit && allEnemies[enemyIndex].x < hiLimit) {
-            player = new Player();
+            // player = new Player();
+            this.reset();
         }
     }
 };
